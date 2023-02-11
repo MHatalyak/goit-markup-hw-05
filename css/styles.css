@@ -12,6 +12,14 @@
     --footer-text-color: #E7E9FC;
     --valid-fields: #31D0AA;
     --section4-icons-color: #8E8F99;
+    --modal-bg-color: #FCFCFC;
+    --black-modal-close: rgba(0, 0, 0, 1);
+
+    --trans-descrp: 250ms cubic-bezier(0.4, 0, 0.2, 1)
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body{
@@ -116,12 +124,37 @@ img {
     padding-top: 120px;
     padding-bottom: 120px;
 }
+
+.menu-link-selected{
+    position: relative;
+    color: var(--accent-color);
+}
+
+.menu-link-selected::after {
+    content: '';
+    position: absolute;
+    bottom: 0;   
+    display: block;
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    
+    background-color: var(--accent-color);
+    
+}
 /* ----------------/COMPONENTS-------------------- */
 
 
 /* -----------------HEADER-------------------- */
 .header {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
     border-bottom: 1px solid var(--footer-text-color);
+    box-shadow: 0px 2px 1px rgba(46, 47, 66, 0.08), 0px 1px 1px rgba(46, 47, 66, 0.16), 0px 1px 6px rgba(46, 47, 66, 0.08);
 }
 
 .icon-header {
@@ -150,22 +183,16 @@ img {
     margin-right: 40px;
 }
 
+.menu-link, 
+.contact-link {
+    transition: color var(--trans-descrp);
+}
+
 .menu-link:hover,
 .menu-link:focus,
 .contact-link:hover,
 .contact-link:focus{
     color: var(--accent-color);
-}
-
-.menu-link:hover:after,
-.menu-link:focus:after {
-    content: '';
-    width: 100%;
-    height: 4px;
-    display: block;
-    border-radius: 4px;
-    background-color: var(--accent-color);
-
 }
 
 .header-address {
@@ -178,12 +205,6 @@ img {
     color: var(--secondary-color);
 }
 /* -----------------/HEADER-------------------- */
-
-
-/* -----------------PORTFOLIO HEADER CHANGES-------------------- */
-.menu-link-selected{
-    color: var(--accent-color);
-}
 
 
 /* -----------------INDEX HERO SECTION-------------------- */
@@ -229,11 +250,13 @@ img {
     background: var(--btn-bg-color);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
     border-radius: 4px;
+
+    transition: background-color var(--trans-descrp);
 }
 
 .hero-btn:hover,
 .hero-btn:focus{
-    background: var(--accent-color);
+    background-color: var(--accent-color);
     cursor: pointer;
 }
 /* -----------------/INDEX HERO SECTION-------------------- */
@@ -303,6 +326,8 @@ img {
 
     background-color: var(--btn-bg-color);
     border-radius: 50%;
+
+    transition: background-color var(--trans-descrp);
 }
 
 .socials-links:hover,
@@ -332,10 +357,14 @@ img {
     padding-right: 31px;
     border: 1px solid var(--section4-icons-color);
     border-radius: 4px;
+
+    transition: border-color var(--trans-descrp);
 }
 
 .section4-icons {
     fill: var(--section4-icons-color);
+
+    transition: fill var(--trans-descrp);
 }
 
 .section4-icons-link:hover,
@@ -392,12 +421,14 @@ img {
     background: var(--secondary-bg-color);
     border: 1px solid var(--footer-text-color);
     border-radius: 4px;
+
+    transition: color var(--trans-descrp), background-color var(--trans-descrp), box-shadow var(--trans-descrp);
 }
 
 .btn-button:hover,
 .btn-button:focus {
     color: var(--white-color);
-    background: var(--accent-color);
+    background-color: var(--accent-color);
     cursor: pointer;
     box-shadow: 
     0px 3px 1px rgba(0, 0, 0, 0.1), 
@@ -411,6 +442,7 @@ img {
 
 .cards-link {
     display: block;
+    transition: box-shadow var(--trans-descrp);
 }
 
 .cards-link:hover,
@@ -420,6 +452,38 @@ img {
     0px 1px 1px rgba(46, 47, 66, 0.16), 
     0px 2px 1px rgba(46, 47, 66, 0.08);
     cursor: pointer;
+}
+
+.cards-link:hover .text-appear,
+.cards-link:focus .text-appear {
+    transform: translate(0, 0);
+}
+
+.cards-img {
+    position: static;
+}
+.cards-appear {
+    position: relative;
+    overflow: hidden;
+}
+
+.text-appear {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    
+    color: var(--secondary-bg-color);
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-top: 40px;
+    background-color: var(--btn-bg-color);
+
+    transform: translate(0%, 100%);
+    transition: transform var(--trans-descrp);
+    transition-delay: 150ms;
 }
 
 .text-under-img {
@@ -467,6 +531,8 @@ img {
 
 .socials-links-footer {
     background-color: rgba(255, 255, 255, 0.1);
+
+    transition: background-color var(--trans-descrp);
 }
 
 .socials-links-footer:hover,
@@ -475,7 +541,81 @@ img {
 }
 /* -----------------/FOOTER-------------------- */
 
+/* -----------------MODAL WINDOW-------------------- */
+.backdrop {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
 
+    /* right: 0;
+  bottom: 0; */
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(46, 47, 66, 0.4);
+
+    transition: opacity var(--trans-descrp), visibility var(--trans-descrp);
+}
+
+.backdrop.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition-delay: 250ms;
+}
+
+.modal {
+    position: absolute;
+    top: calc(50%);
+    left: calc(50%);
+    transform: translate(-50%, -50%);
+
+    width: 408px;
+    min-height: 576px;
+    background: var(--modal-bg-color);
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 2px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+
+    transition: transform var(--trans-descrp), opacity var(--trans-descrp);
+    transition-delay: 400ms;
+}
+
+.backdrop.is-hidden .modal {
+    transform: translate(-50%, -70%);
+    opacity: 0;
+    transition-delay: 0s;
+}
+
+.modal-btn {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 1px solid var(--black-modal-close);
+    border-radius: 50%;
+    background-color: var(--footer-text-color);
+}
+
+.modal-btn:hover,
+.modal-btn:focus {
+    cursor: pointer;
+}
+
+.modal-icon {
+    fill: var(--black-modal-close);
+}
+
+
+/* -----------------/MODAL WINDOW-------------------- */
 
 
 
